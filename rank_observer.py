@@ -41,7 +41,7 @@ def next_page_source(source, driver):
 # 検索結果をcsvファイルとして書き出す
 def write(filename, keyword, line, i):
     today = datetime.datetime.today()
-    path = "/home/centos/test/rank_observer/data/sample/"
+    path = "/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/data/"
     Y = str(today.year) + "/"
     M = str(today.month)
     MM = M.zfill(2) + "/"
@@ -66,14 +66,14 @@ def write(filename, keyword, line, i):
 
 # 調べたいキーワードが書かれたテキストファイルからキーワードを取得
 def get_keyword():
-    with open("/home/centos/test/rank_observer/sample_keyword.txt", "r", encoding="utf-8") as f:
+    with open("/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/keyword.txt", "r", encoding="utf-8") as f:
         line = f.read()
         keyword = line.splitlines()
     return keyword
 
 # 調べたいドメインが書かれたテキストファイルからドメインを取得
 def get_domain():
-    with open("/home/centos/test/rank_observer/sample_domain.txt", "r", encoding="utf-8") as f:
+    with open("/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/domain.txt", "r", encoding="utf-8") as f:
         line = f.read()
         domain = line.splitlines()
     return domain
@@ -147,10 +147,6 @@ def parse():
 
         # ファイルに保存
         filename = datetime.datetime.today().strftime("%Y_%m_%d") + "_" + kw
-
-        # 取得日時とページ数を記載する
-        #with open(os.path.abspath(f"/home/centos/test/rank_observer/data/{sample}/"+filename+".csv"), 'a') as f:
-        #    f.write(datetime.datetime.now().strftime("[ %Y/%m/%d %H:%M:%S ]") + f" got {page_num} pages" + "\n")
 
         for item in results:
            write(filename, item["keyword"], str(item["domain"]), item["rank"])
