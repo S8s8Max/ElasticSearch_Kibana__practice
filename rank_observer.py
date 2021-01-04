@@ -100,6 +100,8 @@ def sophisticate_data(address, page_num, keyword, date, domain):
         for i, content in enumerate(address):
             address_dict = {}
             # リンクが指定ドメインの中にあるか
+            print(content, domain)
+            print(check_domain(content, domain))
             if check_domain(content, domain):
                 # ページ数×１０+アドレスの順で検索順位を算出
                 address_dict["keyword"] = keyword
@@ -121,7 +123,6 @@ def parse():
     page_num = 5
 
     for kw in keyword:
-        print(kw)
         time.sleep(10)
         options = Options()
         options.add_argument('--headless')
@@ -155,14 +156,15 @@ def parse():
         data.extend(results)
         # ここからElasticSearch
         # keyword 毎にデータを書き込む
-    client =  Elasticsearch(scheme="https", use_ssl=True)
+
+    client =  Elasticsearch("http://localhost:9200")
     for d in data:
         body = {}
         body["keyword"]       = d["keyword"]
         body["ranking"]       = d["rank"]
         body["target_domain"] = d["domain"]
         body['get_date']      = d["date"]
-        client.index(index='sample', body=body)
+        client.index(index='sample_index', body=body)
 
 # メール送る
 def send_mail(exception, error=True):
@@ -182,7 +184,7 @@ def send_mail(exception, error=True):
     s.close()
 
 # 時間計測
-start = time.time()
+# start = time.time()
 
 # 実行
 # 例外処理
@@ -193,9 +195,9 @@ formatter = '%(levelname)s : %(asctime)s : %(message)s'
 try:
     parse()
     # calc_time = time.time() - start
-    print(calc_time)
+    # print(calc_time)
 except Exception as e:
     # エラー時のみスタックトレースログ出力
     logging.error(" %s ", traceback.format_exc())
     # エラー時のみメール送信
-    send_mail(traceback.format_exc())
+    # send_mail(traceback.format_exc())
