@@ -41,7 +41,7 @@ def next_page_source(source, driver):
 # 検索結果をcsvファイルとして書き出す
 def write(filename, keyword, line, i):
     today = datetime.datetime.today()
-    path = "/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/data/"
+    path = "./data/"
     Y = str(today.year) + "/"
     M = str(today.month)
     MM = M.zfill(2) + "/"
@@ -66,14 +66,14 @@ def write(filename, keyword, line, i):
 
 # 調べたいキーワードが書かれたテキストファイルからキーワードを取得
 def get_keyword():
-    with open("/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/keyword.txt", "r", encoding="utf-8") as f:
+    with open("./keyword.txt", "r", encoding="utf-8") as f:
         line = f.read()
         keyword = line.splitlines()
     return keyword
 
 # 調べたいドメインが書かれたテキストファイルからドメインを取得
 def get_domain():
-    with open("/Users/kippeiwatanabe/Desktop/CodingSpace/practice/Python/python_practice/elastic_search/domain.txt", "r", encoding="utf-8") as f:
+    with open("./domain.txt", "r", encoding="utf-8") as f:
         line = f.read()
         domain = line.splitlines()
     return domain
